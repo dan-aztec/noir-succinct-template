@@ -373,7 +373,7 @@ abstract contract BaseUltraVerifier {
      * @param _publicInputs - An array of the public inputs
      * @return True if proof is valid, reverts otherwise
      */
-    function verify(bytes calldata _proof, bytes32[] calldata _publicInputs) external view returns (bool) {
+    function verify(bytes memory _proof, bytes32[] memory _publicInputs) public view returns (bool) {
         loadVerificationKey(N_LOC, OMEGA_INVERSE_LOC);
 
         uint256 requiredPublicInputCount;
@@ -2654,16 +2654,14 @@ interface IFunctionVerifier {
 
 contract FunctionVerifier is IFunctionVerifier, UltraVerifier {
     function verify(bytes32 _inputHash, bytes32 _outputHash, bytes memory _proof) external view returns (bool) {
-        (uint256[2] memory a, uint256[2][2] memory b, uint256[2] memory c) =
-            abi.decode(_proof, (uint256[2], uint256[2][2], uint256[2]));
+        bytes32[] memory input = new bytes32[](2);
+        input[0] = bytes32(uint256(_inputHash) & ((1 << 253) - 1));
+        input[1] = bytes32(uint256(_outputHash) & ((1 << 253) - 1));
 
-        uint256[2] memory input = [uint256(_inputHash), uint256(_outputHash)];
-        input[0] = input[0] & ((1 << 253) - 1);
-        input[1] = input[1] & ((1 << 253) - 1);
+        return verify(_proof, input);
     }
-    
 
     function verificationKeyHash() external pure returns (bytes32) {
-        return keccak256(abi.encode(verifyingKey()));
+        return keccak256(abi.encode(UltraVerificationKey.verificationKeyHash()));
     }
 }
