@@ -17,7 +17,9 @@ done
 output="0x$output"
 
 # Read the first line from circuits/proofs/circuits.proof
-proof=$(head -n 1 circuits/proofs/circuits.proof)
+echo -e $(ls)
+echo -e $(ls proofs)
+proof=$(head -n 1 proofs/circuits.proof)
 
 # Prepend '0x' to the proof
 proof="0x$proof"
