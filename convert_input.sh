@@ -14,7 +14,7 @@ input_value=$(jq -r '.input' "$json_file")
 input_bytes=()
 for (( i=0; i<${#input_value}; i+=2 )); do
     hex_byte="${input_value:$i:2}"
-    decimal_byte=$((16#${hex_byte}))  # Convert from hex to decimal
+    decimal_byte=$((16#$hex_byte))
     input_bytes+=("$decimal_byte")
 done
 
