@@ -10,6 +10,9 @@ input_value=$(jq -r '.input' "$json_file")
 # Check if input_value starts with "0x" and remove it
 [[ $input_value =~ ^0x ]] && input_value=${input_value:2}
 
+# Print the modified input_value
+echo "Processed input value: $input_value"
+
 # Convert input to array of decimal bytes
 input_bytes=()
 for (( i=0; i<${#input_value}; i+=2 )); do
