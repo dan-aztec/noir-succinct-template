@@ -13,11 +13,15 @@ input_value=$(jq -r '.input' "$json_file")
 # Convert input to array of decimal bytes
 input_bytes=()
 for (( i=0; i<${#input_value}; i+=2 )); do
+    hex_byte=${input_value:$i:2}
+
+    # Check if hex_byte contains only hexadecimal characters
+    if ! [[ $hex_byte =~ ^[0-9a-fA-F]+$ ]]; then
+        echo "Error: Invalid hexadecimal number '$hex_byte'"
+        exit 1
+    fi
+
     # Convert from hex to decimal
-    hex_byte="${input_value:$i:2}"
-    # Convert from hex to decimal but runs into issue `./convert_input.sh: line 17: 16#nu: value too great for base (error token is "16#nu")`
-    # decimal_byte=$((16#$hex_byte))
-    # Convert from hex to decimal correctly
     decimal_byte=$(printf "%d" "0x$hex_byte")
     input_bytes+=("$decimal_byte")
 done
