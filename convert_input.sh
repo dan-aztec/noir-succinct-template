@@ -5,7 +5,7 @@ json_file="input.json"
 toml_file="Prover.toml"
 
 # Read input from JSON file
-input_value=$(jq -r '.input' "$json_file")
+input_value=$(jq -r '.data.input' "$json_file")
 
 # Check for null or empty input
 if [[ -z $input_value || $input_value == "null" ]]; then
@@ -36,8 +36,3 @@ for (( i=0; i<${#input_value}; i+=2 )); do
 done
 
 # Write to TOML file
-echo "input_bytes = [" > "$toml_file"
-for byte in "${input_bytes[@]}"; do
-    echo "\"$byte\"," >> "$toml_file"
-done
-echo "]" >> "$toml_file"
