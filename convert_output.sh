@@ -16,7 +16,7 @@ done
 # Prepend '0x' to the final output
 output="0x$output"
 
-# Read the first line from circuits/proofs/circuits.proof
+# Read the first line from proofs/circuits.proof
 proof=$(head -n 1 proofs/circuits.proof)
 
 # Prepend '0x' to the proof
