@@ -7,6 +7,12 @@ toml_file="Prover.toml"
 # Read input from JSON file
 input_value=$(jq -r '.input' "$json_file")
 
+# Check for null or empty input
+if [[ -z $input_value || $input_value == "null" ]]; then
+    echo "Error: Invalid input in JSON file"
+    exit 1
+fi
+
 # Check if input_value starts with "0x" and remove it
 [[ $input_value =~ ^0x ]] && input_value=${input_value:2}
 
