@@ -14,9 +14,7 @@ fn main(input_bytes: [u8; 8])-> pub (Field, Field) {
     } 
     let c: u32 = a + b;
     let output_bytes = (c as Field).to_le_bytes(32);
-    for i in 0..32 {
-        println(output_bytes[i]);
-    }
+    println(c);
     let output_hash = sha256(output_bytes);
 
     let mut input_hash_el: Field = 0;
