@@ -72,6 +72,8 @@ fn test_process_hashes() {
     // 0xfa3d0a0ca74229de in little-endian.
     let input_bytes: [u8; 8] = [0xFA, 0x3D, 0x0A, 0x0C, 0xA7, 0x42, 0x29, 0xDE];
     let input_hash = sha256(input_bytes);
+    println("\nInput hash:\n");
+    println(input_hash);
     let output_bytes = generate_output_bytes(input_bytes);
     let output_hash = sha256(output_bytes);
 
@@ -79,32 +81,14 @@ fn test_process_hashes() {
 
     let result = process_hashes(input_hash, output_hash);
 
-    println(result.0);
-    println(expected_output.0);
-    println(result.1);
-    println(expected_output.1);
+    // println(result.0);
+    // println(expected_output.0);
+    // println(result.1);
+    // println(expected_output.1);
 
     // assert(result0 == expected_output.0, "First element of process_hashes result did not match");
     // assert(result1 == expected_output.1, "Second element of process_hashes result did not match");
 }
-
-
-// // Write test for inputhash and outputhash correctly mapping to truncateInputHash and truncatedOutputHash in Noir
-// #[test]
-// fn test_process_hashes() {
-//     let dummy_input_hash = sha256([0xde, 0x29, 0x42, 0xa7, 0x0c, 0x0a, 0x3d, 0xfa]);
-//     let dummy_output_hash = sha256([0xbb, 0x0a, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
-//     let expected_output: (Field, Field) = (0x0afa3d0ca74229de, 0x00000000000a00bb);
-
-//     let result = process_hashes(dummy_input_hash, dummy_output_hash);
-// .
-//     println("\n");
-//     println(result.0);
-//     println(expected_output.0);
-//     // assert(result.0 == expected_output.0, "First element of process_hashes result did not match");
-//     // assert(result.1 == expected_output.1, "Second element of process_hashes result did not match");
-// }
-
 
 #[test]
 fn test_main() {
