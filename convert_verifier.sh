@@ -15,16 +15,20 @@ fi
 # Solidity code to append
 CODE='
 interface IFunctionVerifier {
-    function verify(bytes32 _inputHash, bytes32 _outputHash, bytes memory _proof) external view returns (bool);
+    function verify(bytes32 _inputHash, bytes32 _outputHash, bytes memory _proof) external returns (bool);
 
     function verificationKeyHash() external pure returns (bytes32);
 }
 
 contract FunctionVerifier is IFunctionVerifier, UltraVerifier {
-    function verify(bytes32 _inputHash, bytes32 _outputHash, bytes memory _proof) external view returns (bool) {
+    event VerifyInputs(bytes32 input0, bytes32 input1, bytes proof);
+
+    function verify(bytes32 _inputHash, bytes32 _outputHash, bytes memory _proof) external returns (bool) {
         bytes32[] memory input = new bytes32[](2);
         input[0] = bytes32(uint256(_inputHash) & ((1 << 253) - 1));
         input[1] = bytes32(uint256(_outputHash) & ((1 << 253) - 1));
+
+        emit VerifyInputs(input[0], input[1], _proof);
 
         return verify(_proof, input);
     }
@@ -32,7 +36,8 @@ contract FunctionVerifier is IFunctionVerifier, UltraVerifier {
     function verificationKeyHash() external pure returns (bytes32) {
         return keccak256(abi.encode(UltraVerificationKey.verificationKeyHash()));
     }
-}'
+}
+'
 
 # Append the code to the file
 echo "$CODE" >> "$FILE_PATH"
