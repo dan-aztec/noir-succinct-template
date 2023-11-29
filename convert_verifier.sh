@@ -3,15 +3,6 @@
 # Define the file path
 FILE_PATH="./circuits/contract/circuits/plonk_vk.sol"
 
-# Determine the OS and execute the appropriate sed command
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    # macOS uses BSD sed, which requires an empty string argument with -i
-    sed -i '' 's/function verify(bytes calldata _proof, bytes32\[\] calldata _publicInputs) external view returns (bool) {/function verify(bytes memory _proof, bytes32[] memory _publicInputs) public view returns (bool) {/' "$FILE_PATH"
-else
-    # Linux uses GNU sed, which does not require an empty string with -i
-    sed -i 's/function verify(bytes calldata _proof, bytes32\[\] calldata _publicInputs) external view returns (bool) {/function verify(bytes memory _proof, bytes32[] memory _publicInputs) public view returns (bool) {/' "$FILE_PATH"
-fi
-
 # Solidity code to append
 CODE='
 interface IFunctionVerifier {

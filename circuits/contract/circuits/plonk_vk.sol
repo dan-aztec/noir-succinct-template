@@ -373,7 +373,7 @@ abstract contract BaseUltraVerifier {
      * @param _publicInputs - An array of the public inputs
      * @return True if proof is valid, reverts otherwise
      */
-    function verify(bytes memory _proof, bytes32[] memory _publicInputs) public view returns (bool) {
+    function verify(bytes calldata _proof, bytes32[] calldata _publicInputs) external view returns (bool) {
         loadVerificationKey(N_LOC, OMEGA_INVERSE_LOC);
 
         uint256 requiredPublicInputCount;
@@ -2662,7 +2662,7 @@ contract FunctionVerifier is IFunctionVerifier, UltraVerifier {
 
         emit VerifyInputs(input[0], input[1], _proof);
 
-        return verify(_proof, input);
+        return this.verify(_proof, input);
     }
 
     function verificationKeyHash() external pure returns (bytes32) {
