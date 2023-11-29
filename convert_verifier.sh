@@ -30,7 +30,7 @@ contract FunctionVerifier is IFunctionVerifier, UltraVerifier {
 
         emit VerifyInputs(input[0], input[1], _proof);
 
-        return verify(_proof, input);
+        return this.verify(_proof, input);
     }
 
     function verificationKeyHash() external pure returns (bytes32) {
