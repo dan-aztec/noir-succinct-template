@@ -1,11 +1,11 @@
-// Verification Key Hash: adffd8f57e99ddf2c87670c4c7c4412343a93492adc802d42bb4c4bb8a1b08a8
+// Verification Key Hash: 1b7032f08c61bb142f73477fb2e8f769edb68390ca8ea52dd73c0037cdc2f507
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2022 Aztec
 pragma solidity >=0.8.4;
 
 library UltraVerificationKey {
-    function verificationKeyHash() internal pure returns (bytes32) {
-        return 0xadffd8f57e99ddf2c87670c4c7c4412343a93492adc802d42bb4c4bb8a1b08a8;
+    function verificationKeyHash() internal pure returns(bytes32) {
+        return 0x1b7032f08c61bb142f73477fb2e8f769edb68390ca8ea52dd73c0037cdc2f507;
     }
 
     function loadVerificationKey(uint256 _vk, uint256 _omegaInverseLoc) internal pure {
@@ -34,8 +34,8 @@ library UltraVerificationKey {
             mstore(add(_vk, 0x2a0), 0x16a409532c8a1693536e93b6ce9920bfc2e6796e8dfe404675a0cdf6ee77ee7a) // vk.Q_ELLIPTIC.y
             mstore(add(_vk, 0x2c0), 0x24e1be1275f821f267c6b11dee41b66a6abe8bcc959595202046fe1cffd3a702) // vk.Q_AUX.x
             mstore(add(_vk, 0x2e0), 0x18b1cc0aca11aacdeec54515a9d311eef3e6040cf36e8ea50524f255dee6fa65) // vk.Q_AUX.y
-            mstore(add(_vk, 0x300), 0x059a274fc52884fc6609f3e390f7cf7f8f98c14818cddd5ad65e47c6fc9216e6) // vk.SIGMA1.x
-            mstore(add(_vk, 0x320), 0x0d0319700d757e6feb15fa7a3528087ca40105901600b492bd46bb30e1cfb08b) // vk.SIGMA1.y
+            mstore(add(_vk, 0x300), 0x2413c318ef074dcb48098d51a9c435a8ee6ba7243bddca98375e5f5d756d27f7) // vk.SIGMA1.x
+            mstore(add(_vk, 0x320), 0x21218eb865e3717f061d2cff36db8e0eab537a05b36022f4b2993bd703a88a68) // vk.SIGMA1.y
             mstore(add(_vk, 0x340), 0x146f8f81bb207eb9638531f5fe6f54cf4aee91d136ff3c1d3cb92e54ecc9035c) // vk.SIGMA2.x
             mstore(add(_vk, 0x360), 0x27d171cf81fe59f7d6eaefe476b06b145e8decf5d74f19f09539e8ce669b395b) // vk.SIGMA2.y
             mstore(add(_vk, 0x380), 0x2b2bdbde91f80547e8874d9529a4694524201e68843dad0d39ae9e1421d10b62) // vk.SIGMA3.x
@@ -62,10 +62,10 @@ library UltraVerificationKey {
             mstore(add(_vk, 0x620), 0x1df1f5a41f6dac43ec67792aa79f44e1a098923c25c07c62e1be4a9db7b135d8) // vk.ID4.y
             mstore(add(_vk, 0x640), 0x00) // vk.contains_recursive_proof
             mstore(add(_vk, 0x660), 0) // vk.recursive_proof_public_input_indices
-            mstore(add(_vk, 0x680), 0x260e01b251f6f1c7e7ff4e580791dee8ea51d87a358e038b4efe30fac09383c1) // vk.g2_x.X.c1
-            mstore(add(_vk, 0x6a0), 0x0118c4d5b837bcc2bc89b5b398b5974e9f5944073b32078b7e231fec938883b0) // vk.g2_x.X.c0
-            mstore(add(_vk, 0x6c0), 0x04fc6369f7110fe3d25156c1bb9a72859cf2a04641f99ba4ee413c80da6a5fe4) // vk.g2_x.Y.c1
-            mstore(add(_vk, 0x6e0), 0x22febda3c0c0632a56475b4214e5615e11e6dd3f96e6cea2854a87d4dacc5e55) // vk.g2_x.Y.c0
+            mstore(add(_vk, 0x680), 0x260e01b251f6f1c7e7ff4e580791dee8ea51d87a358e038b4efe30fac09383c1) // vk.g2_x.X.c1 
+            mstore(add(_vk, 0x6a0), 0x0118c4d5b837bcc2bc89b5b398b5974e9f5944073b32078b7e231fec938883b0) // vk.g2_x.X.c0 
+            mstore(add(_vk, 0x6c0), 0x04fc6369f7110fe3d25156c1bb9a72859cf2a04641f99ba4ee413c80da6a5fe4) // vk.g2_x.Y.c1 
+            mstore(add(_vk, 0x6e0), 0x22febda3c0c0632a56475b4214e5615e11e6dd3f96e6cea2854a87d4dacc5e55) // vk.g2_x.Y.c0 
             mstore(_omegaInverseLoc, 0x0b5d56b77fe704e8e92338c0082f37e091126414c830e4c6922d5ac802d842d4) // vk.work_root_inverse
         }
     }
@@ -74,7 +74,6 @@ library UltraVerificationKey {
  * @title Ultra Plonk proof verification contract
  * @dev Top level Plonk proof verification contract, which allows Plonk proof to be verified
  */
-
 abstract contract BaseUltraVerifier {
     // VERIFICATION KEY MEMORY LOCATIONS
     uint256 internal constant N_LOC = 0x380;
@@ -357,7 +356,6 @@ abstract contract BaseUltraVerifier {
     // y^2 = x^3 + ax + b
     // for Grumpkin, a = 0 and b = -17. We use b in a custom gate relation that evaluates elliptic curve arithmetic
     uint256 internal constant GRUMPKIN_CURVE_B_PARAMETER_NEGATED = 17;
-
     error PUBLIC_INPUT_COUNT_INVALID(uint256 expected, uint256 actual);
     error PUBLIC_INPUT_INVALID_BN128_G1_POINT();
     error PUBLIC_INPUT_GE_P();
@@ -1243,14 +1241,37 @@ abstract contract BaseUltraVerifier {
                             mulmod(x_diff, x_diff, p),
                             p
                         ),
-                        addmod(sub(p, addmod(y2_sqr, y1_sqr, p)), addmod(y1y2, y1y2, p), p),
+                        addmod(
+                            sub(
+                                p,
+                                addmod(y2_sqr, y1_sqr, p)
+                            ),
+                            addmod(y1y2, y1y2, p),
+                            p
+                        ),
                         p
                     )
                 x_add_identity :=
-                    mulmod(mulmod(x_add_identity, addmod(1, sub(p, mload(QM_EVAL_LOC)), p), p), mload(C_ALPHA_BASE_LOC), p)
+                    mulmod(
+                        mulmod(
+                            x_add_identity,
+                            addmod(
+                                1,
+                                sub(p, mload(QM_EVAL_LOC)),
+                                p
+                            ),
+                            p
+                        ),
+                        mload(C_ALPHA_BASE_LOC),
+                        p
+                    )
 
                 // q_elliptic * (x3 + x2 + x1)(x2 - x1)(x2 - x1) - y2^2 - y1^2 + 2(y2y1)*q_sign = 0
-                let y1_plus_y3 := addmod(mload(Y1_EVAL_LOC), mload(Y3_EVAL_LOC), p)
+                let y1_plus_y3 := addmod(
+                    mload(Y1_EVAL_LOC),
+                    mload(Y3_EVAL_LOC),
+                    p
+                )
                 let y_diff := addmod(mulmod(mload(Y2_EVAL_LOC), mload(QSIGN_LOC), p), sub(p, mload(Y1_EVAL_LOC)), p)
                 let y_add_identity :=
                     addmod(
@@ -2620,12 +2641,7 @@ contract UltraVerifier is BaseUltraVerifier {
         return UltraVerificationKey.verificationKeyHash();
     }
 
-    function loadVerificationKey(uint256 vk, uint256 _omegaInverseLoc)
-        internal
-        pure
-        virtual
-        override(BaseUltraVerifier)
-    {
+    function loadVerificationKey(uint256 vk, uint256 _omegaInverseLoc) internal pure virtual override(BaseUltraVerifier) {
         UltraVerificationKey.loadVerificationKey(vk, _omegaInverseLoc);
     }
 }
@@ -2653,3 +2669,4 @@ contract FunctionVerifier is IFunctionVerifier, UltraVerifier {
         return keccak256(abi.encode(UltraVerificationKey.verificationKeyHash()));
     }
 }
+

@@ -71,11 +71,7 @@ fn test_process_hashes() {
     // 0xfa3d0a0ca74229de in little-endian.
     let input_bytes: [u8; 8] = [0xFA, 0x3D, 0x0A, 0x0C, 0xA7, 0x42, 0x29, 0xDE];
     let input_hash = sha256(input_bytes);
-    println("\nInput hash:\n");
-    println(input_hash);
     let output_bytes = generate_output_bytes(input_bytes);
-    println("\nOutput bytes:\n");
-    println(output_bytes);
     let output_hash = sha256(output_bytes);
 
     let expected_output: ([u8; 32], [u8; 32]) = (input_hash, output_hash);
