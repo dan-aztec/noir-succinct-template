@@ -36,3 +36,9 @@ for (( i=0; i<${#input_value}; i+=2 )); do
 done
 
 # Write to TOML file
+echo "input_bytes = [" > "$toml_file"
+for byte in "${input_bytes[@]}"; do
+    echo "\"$byte\"," >> "$toml_file"
+done
+echo "]" >> "$toml_file"
+
