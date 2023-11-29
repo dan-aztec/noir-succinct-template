@@ -4,6 +4,7 @@ use dep::std::println;
 fn main(input_bytes: [u8; 8]) -> pub (Field, Field) {
     let input_hash = sha256(input_bytes);
     let output_bytes = generate_output_bytes(input_bytes);
+    println(output_bytes);
     let output_hash = sha256(output_bytes);
 
     process_hashes(input_hash, output_hash)
@@ -19,9 +20,7 @@ fn generate_output_bytes(input_bytes: [u8; 8]) -> [u8; 32] {
         power *= 2;
     }
     let c: u32 = a + b;
-    println(c);
     let output = (c as Field).to_le_bytes(32);
-
     let mut output_bytes: [u8; 32] = [0; 32];
     for i in 0..32 {
         output_bytes[i] = output[i];
@@ -58,7 +57,7 @@ fn test_generate_output_bytes() {
                                      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                                      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                                      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00];
-
+    
     let output = generate_output_bytes(input_bytes);
 
     for i in 0..32 {
@@ -75,6 +74,8 @@ fn test_process_hashes() {
     println("\nInput hash:\n");
     println(input_hash);
     let output_bytes = generate_output_bytes(input_bytes);
+    println("\nOutput bytes:\n");
+    println(output_bytes);
     let output_hash = sha256(output_bytes);
 
     let expected_output: ([u8; 32], [u8; 32]) = (input_hash, output_hash);
@@ -97,3 +98,7 @@ fn test_main() {
     // Uncomment to make test fail
     // main(1, 1);
 }
+
+
+// 14bd74334d7a01cd9afabe1af9e59b5d2e022bc5e5b6fb350f349d51484c0fe0
+// 0289b7e4da6e3dc086a2619ab89617d4db7d14c4761b9171b10d7449a15510f0
