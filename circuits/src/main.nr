@@ -3,7 +3,6 @@ use dep::std::println;
 
 fn main(input_bytes: [u8; 8])-> pub (Field, Field) {
     let input_hash = sha256(input_bytes);
-    println(input_hash); 
 
     let mut power: u32 = 1;
     let mut a: u32 = 0;
@@ -14,7 +13,8 @@ fn main(input_bytes: [u8; 8])-> pub (Field, Field) {
         power *= 2;
     } 
     let c: u32 = a + b;
-    let bytes = (c as Field).to_be_bytes(32);
+    let bytes = (c as Field).to_le_bytes(32);
+    println(bytes);
     let output_hash = sha256(bytes);
 
     let mut input_hash_el: Field = 0;
@@ -22,8 +22,8 @@ fn main(input_bytes: [u8; 8])-> pub (Field, Field) {
 
     let mut power: Field = 1;
     for i in (0 as u32)..(32 as u32) {
-        let input_hash_bits = (input_hash[i] as Field).to_be_bits(8);
-        let output_hash_bits = (output_hash[i] as Field).to_be_bits(8);
+        let input_hash_bits = (input_hash[i] as Field).to_le_bits(8);
+        let output_hash_bits = (output_hash[i] as Field).to_le_bits(8);
         for j in (0 as u32)..(8 as u32) {
             if i*8 + j < 253 {
                 input_hash_el += (input_hash_bits[j] as Field) * power;
