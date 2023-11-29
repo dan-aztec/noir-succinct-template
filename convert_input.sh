@@ -16,6 +16,9 @@ fi
 # Check if input_value starts with "0x" and remove it
 [[ $input_value =~ ^0x ]] && input_value=${input_value:2}
 
+# Keep only the last 16 characters (last 8 bytes in hex)
+input_value=${input_value: -16}
+
 # Print the modified input_value
 echo "Processed input value: $input_value"
 
@@ -41,4 +44,3 @@ for byte in "${input_bytes[@]}"; do
     echo "\"$byte\"," >> "$toml_file"
 done
 echo "]" >> "$toml_file"
-
